@@ -12,26 +12,24 @@ const handleConnect = async () => {
 };
 
 function App() {
-  const { useIsActive, useAccount, useError } = hooks;
+  // const { useIsActive, useAccount, useError } = hooks;
 
-  const isActive = useIsActive();
-  const activeAccount = useAccount();
-  const error = useError();
+  // const isActive = useIsActive();
+  // const activeAccount = useAccount();
+  // const error = useError();
 
-  if (error?.message === AVALANCHE_NOT_INSTALLED_ERROR) {
-    console.log('Install Core Wallet');
-  }
+  // if (error?.message === AVALANCHE_NOT_INSTALLED_ERROR) {
+  //   console.log('Install Core Wallet');
+  // }
 
-  if (!isActive) {
+  if (true) {
     return (
       <div className='App'>
-        <button onClick={() => connector.activate()}>Connect Core</button>
+        <button onClick={() => handleConnect()}>Connect Core</button>
         <button onClick={handleConnect}>Connect Metamask</button>
       </div>
     );
   }
-
-  return <>connected:{activeAccount}</>;
 }
 
 export default App;
