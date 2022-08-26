@@ -1,5 +1,37 @@
+import { AVALANCHE_NOT_INSTALLED_ERROR } from '@avalabs/avalanche-connector';
+import { connector, hooks } from './connector.js';
+import { ethers } from 'ethers';
+
+const handleConnect = async () => {
+  if (window.ethereum) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+  } else {
+    console.log(new Error('Install Metamask'));
+  }
+};
+
 function App() {
-  return <div className='App'>Hello</div>;
+  const { useIsActive, useAccount, useError } = hooks;
+
+  const isActive = useIsActive();
+  const activeAccount = useAccount();
+  const error = useError();
+
+  if (error?.message === AVALANCHE_NOT_INSTALLED_ERROR) {
+    console.log('Install Core Wallet');
+  }
+
+  if (!isActive) {
+    return (
+      <div className='App'>
+        <button onClick={() => connector.activate()}>Connect Core</button>
+        <button onClick={handleConnect}>Connect Metamask</button>
+      </div>
+    );
+  }
+
+  return <>connected:{activeAccount}</>;
 }
 
 export default App;
